@@ -23,6 +23,19 @@ The files in this repository include:
 - specifimage.py
 	- evaluates a specific image in folder
 
+### Further Improvements
+Further improvements to the code:
+- create validation set
+- better preprocessing for greater invariance 
+- greater amount of training data
+- apply build to other platforms
+
+
+### Results:
+Ran on Ubuntu with Geforce GTX 1070 GPU
+Successful
+- 12 hours of training on cifar for 40470 iterations achieves 80% test accuracy
+	- could have been ran for longer, to see if converges more.
 
 ###### References:
 @article{DBLP:journals/corr/HeZRS15,
