@@ -31,6 +31,7 @@ Further improvements to the code:
 - apply build to other platforms
 - eliminate useless code
 - add more error systems for better security and debugging
+- introduce batch normalization mean and variance as variable which are retained in the model during evaluation
 
 ### Results:
 Ran on Ubuntu with Geforce GTX 1070 GPU
