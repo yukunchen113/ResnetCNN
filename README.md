@@ -29,7 +29,8 @@ Further improvements to the code:
 - better preprocessing for greater invariance 
 - greater amount of training data
 - apply build to other platforms
-
+- eliminate useless code
+- add more error systems for better security and debugging
 
 ### Results:
 Ran on Ubuntu with Geforce GTX 1070 GPU
