@@ -1,10 +1,3 @@
-'''
-Further improvements:
-	- change first shortcut to linear projection
-	- make validation set, to determine when to stop training
-'''
-
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -157,23 +150,19 @@ def batch_norm(x, n_in, istrain,scope = 'batch_norm'):
 		variance_epsilon = 1e-8
 		mb_mean, mb_var = tf.nn.moments(x, [0,1,2])#mean and variance for a minibatch
 
-		#use mean and variance of minibatch for training
-		#use exponential moving average of means and variances of traing for the testing
-		#	mean and variance
-		#see:https://www.tensorflow.org/api_docs/python/tf/train/ExponentialMovingAverage 
 		ema = tf.train.ExponentialMovingAverage(decay = EXPONETIAL_MOVING_AVERAGE_DECAY)
 		def train_moving_average():
 			maintain_averages_op = ema.apply([mb_mean, mb_var])
 			with tf.control_dependencies([maintain_averages_op]):
 				return tf.identity(mb_mean), tf.identity(mb_var)
 		istrain = tf.cast(istrain,tf.bool)
-		tf.cond(istrain,train_moving_average,
+		mean, var = tf.cond(istrain,train_moving_average,
 			lambda:(ema.average(mb_mean),ema.average(mb_var)))
 
 		out = tf.nn.batch_normalization(
 			x = x,
-			mean = mb_mean,
-			variance = mb_var,
+			mean = mean,
+			variance = var,
 			offset = beta,
 			scale = gamma,
 			variance_epsilon = variance_epsilon
@@ -200,7 +189,7 @@ def resnet_node(x, n_in, n_out, istrain,scope ='resnet_node'): # 3 Layered
 		if n_in == n_out:
 			shortcut = tf.identity(x, name = 'shorcut')
 		else:
-			shortcut =conv(#should be changed to linear projection of x to n_out depth
+			shortcut =conv(
 				input = x,
 				k_len = 1,
 				s_len = 1,  
@@ -209,19 +198,19 @@ def resnet_node(x, n_in, n_out, istrain,scope ='resnet_node'): # 3 Layered
 				scope = 'shortcut')
 
 		#first conv
-		#out = batch_norm(x = x, n_in = n_in, scope = 'batch_norm1',istrain=istrain)
+		out = batch_norm(x = x, n_in = n_in, scope = 'batch_norm1',istrain=istrain)
 		out = tf.nn.relu(x, name = 'activation1')
 		out = conv(input = out,k_len = 1,s_len = 1, n_in=n_in, n_out=n_out/4,
 			scope = 'conv1')
 
 		#2nd conv
-		#out = batch_norm(x = out, n_in = n_out/4, scope = 'batch_norm2',istrain=istrain)
+		out = batch_norm(x = out, n_in = n_out/4, scope = 'batch_norm2',istrain=istrain)
 		out = tf.nn.relu(out, name = 'activation2')
 		out = conv(input = out,k_len = 3,s_len = 1, n_in=n_out/4, n_out=n_out/4,
 			scope = 'conv2')
 
 		#3rd conv
-		#out = batch_norm(x = out, n_in = n_out/4, scope = 'batch_norm3',istrain=istrain)
+		out = batch_norm(x = out, n_in = n_out/4, scope = 'batch_norm3',istrain=istrain)
 		out = tf.nn.relu(out, name = 'activation3')
 		out = conv(input = out,k_len = 1,s_len = 1, n_in=n_out/4, n_out=n_out,
 			scope = 'conv3')
@@ -345,8 +334,7 @@ def loss(logits, labels, scope = 'loss'):
 			name = 'softmax_cross_entropy_loss'
 		))
 		tf.add_to_collection('losses', cross_entropy)
-
-	return cross_entropy#tf.add_n(tf.get_collection('losses'),name = 'total_loss')
+	return tf.reduce_mean(cross_entropy)
 def accuracy(logits, labels, scope = 'accuracy'):
 	with tf.variable_scope(scope):
 		labels = tf.cast(labels, tf.int64)
