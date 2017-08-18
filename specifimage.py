@@ -19,7 +19,7 @@ saver = tf.train.Saver()
 with tf.Session() as sess:
 	saver.restore(sess, checkpt.model_checkpoint_path)
 	[guess] = sess.run(guess)
-	print 'Idk man, is it a ' + os.listdir(img_dir)[guess].split('.')[-1]
+	print 'is it a ' + os.listdir(img_dir)[guess].split('.')[-1]
 '''
 
 #cifar10
@@ -49,4 +49,4 @@ lista = ['airplane','automobile','bird','cat','deer','dog','frog','horse','ship'
 with tf.Session() as sess:
 	saver.restore(sess, checkpt.model_checkpoint_path)
 	[guess] = sess.run(guess)
-	print 'Idk man, is it a ' + lista[guess] + '?'
+	print 'is it a ' + lista[guess] + '?'
