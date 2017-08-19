@@ -52,8 +52,8 @@ def train():
 					ex_per_sec = write_frequency*batch_size/duration
 					sec_per_batch = float(duration/write_frequency)
 
-					str = ('step: %d, accuracy:%.3f loss: %.3f, examples/sec: %.2f, sec/batch: %1f, total time: %dh %dm %ds')
-					print(str%(self.step,accuracy,loss,ex_per_sec,sec_per_batch, th,tm,ts))
+					string = ('step: %d, accuracy:%.3f loss: %.3f, examples/sec: %.2f, sec/batch: %1f, total time: %dh %dm %ds')
+					print(string%(self.step,accuracy,loss,ex_per_sec,sec_per_batch, th,tm,ts))
 		with tf.train.MonitoredTrainingSession(
 			checkpoint_dir = train_dir,#for checkpoint writing
 			
