@@ -22,7 +22,17 @@ The files in this repository include:
 	- runs test batch evalutation for model
 - specifimage.py
 	- evaluates a specific image in folder
-
+	
+### Results:
+Ran on Ubuntu with Geforce GTX 1070 GPU
+Successful
+- 12 hours of training on cifar for 40470 iterations achieves 80% test accuracy
+	- could have been ran for longer, to see if converges more.
+- 17 hours of training on Caltech256 for 61100 iterations
+	- training accuracy: 60%
+	- testing accuracy: 0.8%
+	- result of overfitting
+	
 ### Further Improvements
 Further improvements to the code:
 - create validation set
@@ -32,12 +42,6 @@ Further improvements to the code:
 - eliminate useless code
 - add more error systems for better security and debugging
 - introduce batch normalization mean and variance as variable which are retained in the model during evaluation
-
-### Results:
-Ran on Ubuntu with Geforce GTX 1070 GPU
-Successful
-- 12 hours of training on cifar for 40470 iterations achieves 80% test accuracy
-	- could have been ran for longer, to see if converges more.
 
 ###### References:
 @article{DBLP:journals/corr/HeZRS15,
