@@ -6,6 +6,8 @@ based on paper, [Deep Residual Learning for Image Recognition](https://arxiv.org
 
 The Resnet is similar to a convolutional neural network with a 'shortcut'. A shortcut is a path that goes through a group of convolutional layers, directly allowing the input to pass to the output. This creates a stablizing effect similar to an anchor, by supporting the parameters across deep networks, preventing degradation. Resnets allows for generalization to increase with layer depth.
 
+Ran on [Cifar10](https://www.cs.toronto.edu/~kriz/cifar.html) and [Caltech256](http://www.vision.caltech.edu/Image_Datasets/Caltech256/) datasets
+
 ### Files
 The files in this repository include:
 - caltech256_bin.py 
@@ -58,3 +60,8 @@ Further improvements to the code:
   biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/HeZRS15},
   bibsource = {dblp computer science bibliography, http://dblp.org}
 }
+
+
+CIFAR10: https://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf
+
+Caltech: Griffin, G. Holub, AD. Perona, P. The Caltech 256. Caltech Technical Report
